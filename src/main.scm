@@ -59,3 +59,43 @@
                      (if (= (fact (car test)) (car (cdr test)))
                          (test-fact (cdr tests))
                          (error "test failed" test)))))
+
+;; append (jwalsh-append)
+(define jwalsh-append (lambda (l1 l2)
+                        (if (null? l1) l2)
+                        (cons (car l1) (jwalsh-append (cdr l1) l2))))
+
+(display (jwalsh-append '(1 2 3) '(4 5 6)))
+
+;; test append
+(define jwalsh-append-tests (list (list '(1 2 3) '(4 5 6) '(1 2 3 4 5 6))
+                           (list '(1 2 3) '() '(1 2 3))
+                           (list '() '(4 5 6) '(4 5 6))
+                           (list '() '() '())))
+
+(define jwalsh-append-harness (lambda (tests)
+                                (if (null? tests) 'done)
+                                (let ((test (car tests)))
+                                  (if (= (jwalsh-append (car test) (car (cdr test))) (car (cdr (cdr test))))
+                                      (test-jwalsh-append (cdr tests))
+                                      (error "test failed" test)))))
+
+;; reverse (jwalsh-reverse)
+(define jwalsh-reverse (lambda (l)
+                         (if (null? l) '())
+                         (jwalsh-append (jwalsh-reverse (cdr l)) (cons (car l) '()))))
+
+(display (jwalsh-reverse '(1 2 3 4 5 6)))
+
+;; test reverse
+(define jwalsh-reverse-tests (list (list '(1 2 3 4 5 6) '(6 5 4 3 2 1))
+                                   (list '(1 2 3) '(3 2 1))
+                                   (list '(1) '(1))
+                                   (list '() '())))
+
+(define jwalsh-reverse-harness (lambda (tests)
+                                    (if (null? tests) 'done)
+                                    (let ((test (car tests)))
+                                    (if (= (jwalsh-reverse (car test)) (car (cdr test)))
+                                        (test-jwalsh-reverse (cdr tests))
+                                        (error "test failed" test)))))
