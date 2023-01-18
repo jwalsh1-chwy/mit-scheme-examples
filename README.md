@@ -1,1 +1,1 @@
-# mit-scheme-examples
+# Scheme Coding Exercises
